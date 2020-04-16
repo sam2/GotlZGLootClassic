@@ -1,0 +1,7 @@
+## Interface: 1900
+## Version: 1.0.0
+## Title: GotlZGLoot
+## Notes: Automatic Loot Master for ZG
+## SavedVariables: GZGL_Config, GZGL_SessionLoot
+GotlZgLoot.xml
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Ui xsi:schemaLocation="http://www.blizzard.com/wow/ui/"
+    xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ns="http://www.blizzard.com/wow/ui/">
+	
+	<Script file="GotlZgLoot.lua"/>
+	<Script file="ClassLoot.lua"/>
+
+	<Frame name="GotlZgLoot_MainFrame">
+		<Scripts>
+			<OnLoad>
+				GZGL_OnLoad()
+			</OnLoad>
+			<OnEvent>
+				GZGL_OnEvent(event)
+			</OnEvent>
+		</Scripts>
+	</Frame>
+
+</Ui>
