@@ -9,25 +9,25 @@
 
 
 GZGL = {};
-GZGL["Bloodscalp Coin"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin"};
-GZGL["Gurubashi Coin"] = {"Druid", "Hunter", "Mage", "Warrior", "Warlock", "Shaman"};
-GZGL["Hakkari Coin"] = {"Priest", "Druid", "Rogue", "Hunter", "Warlock", "Shaman"};
-GZGL["Razzashi Coin"] = {"Priest", "Druid", "Mage", "Rogue", "Hunter", "Shaman"};
-GZGL["Sandfury Coin"] = {"Priest", "Druid", "Mage", "Hunter", "Warrior", "Paladin"};
-GZGL["Skullsplitter Coin"] = {"Rogue", "Hunter", "Warrior", "Warlock", "Shaman"};
-GZGL["Vilebranch Coin"] = {"Druid", "Mage", "Rogue", "Warrior", "Warlock", "Paladin"};
-GZGL["Witherbark Coin"] = {"Priest", "Mage", "Warrior", "Warlock", "Shaman", "Paladin"};
-GZGL["Zulian Coin"] = {"Priest", "Druid", "Mage", "Rogue", "Hunter", "Paladin"};
+GZGL["Bloodscalp Coin"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
+GZGL["Gurubashi Coin"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
+GZGL["Hakkari Coin"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
+GZGL["Razzashi Coin"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
+GZGL["Sandfury Coin"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
+GZGL["Skullsplitter Coin"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
+GZGL["Vilebranch Coin"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
+GZGL["Witherbark Coin"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
+GZGL["Zulian Coin"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
 
-GZGL["Blue Hakkari Bijou"] = {"Mage", "Rogue", "Shaman"};
-GZGL["Bronze Hakkari Bijou"] = {"Priest", "Druid", "Warrior"};
-GZGL["Gold Hakkari Bijou"] = {"Rogue", "Shaman", "Paladin"};
-GZGL["Green Hakkari Bijou"] = {"Druid", "Hunter", "Warrior"};
-GZGL["Orange Hakkari Bijou"] = {"Priest", "Mage", "Warlock"};
-GZGL["Purple Hakkari Bijou"] = {"Rogue", "Shaman", "Paladin"};
-GZGL["Red Hakkari Bijou"] = {"Druid", "Warlock", "Paladin"};
-GZGL["Silver Hakkari Bijou"] = {"Mage", "Hunter", "Warlock"};
-GZGL["Yellow Hakkari Bijou"] = {"Priest", "Hunter", "Warrior"};
+GZGL["Blue Hakkari Bijou"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
+GZGL["Bronze Hakkari Bijou"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
+GZGL["Gold Hakkari Bijou"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
+GZGL["Green Hakkari Bijou"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
+GZGL["Orange Hakkari Bijou"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
+GZGL["Purple Hakkari Bijou"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
+GZGL["Red Hakkari Bijou"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
+GZGL["Silver Hakkari Bijou"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
+GZGL["Yellow Hakkari Bijou"] = {"Priest", "Rogue", "Warrior", "Warlock", "Shaman", "Paladin", "Druid", "Hunter", "Mage"};
 
 --[[
 	Not used
