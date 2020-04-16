@@ -62,8 +62,9 @@ Basic function handlers for events, onload, onevent, command and config initiali
 
 function GZGL_OnLoad()
 	-- Register Events to listen to
-	this:RegisterEvent("VARIABLES_LOADED")
-	this:RegisterEvent("LOOT_OPENED")
+	local frame = CreateFrame("FRAME", "FooAddonFrame");
+	frame:RegisterEvent("VARIABLES_LOADED")
+	frame:RegisterEvent("LOOT_OPENED")
 
 	-- Reset config
 	GZGL_InitConfig();
@@ -73,12 +74,14 @@ function GZGL_OnLoad()
 	SlashCmdList["GZGL"] = function (msg)
 								GZGL_CmdHandler(msg);
 						   end
+	frame:SetScript("OnEvent", GZGL_OnEvent);
 end
 
-function GZGL_OnEvent(event)
+function GZGL_OnEvent(self, event)
 	if(event == "VARIABLES_LOADED") then
 		GZGL_Print("Gotl ZG Master Looter Loaded");
-	elseif (event == "LOOT_OPENED") then
+	end
+	if (event == "LOOT_OPENED") then
 		GZGL_ProcessLootOpen();
 	end
 end
@@ -221,7 +224,7 @@ function GZGL_ProcessLootOpen()
 		for i=1, lootItems, 1 do
 			-- If it's an item (not money), if it's a coin or a bijou (rari < 4) and is in our list of coins and bijous
 
-			if(LootSlotIsItem(i)) then
+			if(LootSlotHasItem(i)) then
 				local loot = GZGL_GetLootInfo(i);
 				GZGL_Print("Processing Loot: "..loot.itemLink, "", 1);
 				
@@ -439,7 +442,7 @@ function GZGL_GetIdFromItemLink(itemLink)
         --output = output .. string.sub( itemLink, i, i ) .. " ";
     --end
 	
-    for itemid in string.gfind(itemLink, ":(%d+):" ) do
+    for itemid in string.gmatch(itemLink, ":(%d+):" ) do
         return itemid;
     end
 end
@@ -454,7 +457,7 @@ end
 function GZGL_ShowIgnoreList(showto)
 	local hasIgnore = false;
 
-	for key, value in GZGL_SessionLoot do
+	for key, value in ipairs(GZGL_SessionLoot) do
 		if(GZGL_SessionLoot[key].ignore ~= nil) then
 			GZGL_Print("Player " .. key .. " is being ignored for " .. GZGL_SessionLoot[key].ignore .. " loot.", showto);
 			hasIgnore = true;
@@ -470,7 +473,7 @@ end
 function GZGL_ShowLoot(showto)
 	local hasLoot = false;
 
-	for key, value in GZGL_SessionLoot do
+	for key, value in ipairs(GZGL_SessionLoot) do
 		local rstr = key..": ";
 	  
 		if(GZGL_SessionLoot[key].coins ~= nil) then
@@ -515,7 +518,7 @@ end
 function GZGL_GetLootInfo(slot)
 	local lootInfo = {};
 	lootInfo.itemIndex = slot;
-	lootInfo.icon, lootInfo.name, lootInfo.quant, lootInfo.rari = GetLootSlotInfo(slot);
+	lootInfo.icon, lootInfo.name, lootInfo.quant, lootInfo.currencyID, lootInfo.rari, lootInfo.locked = GetLootSlotInfo(slot);
 	
 	-- 28/02/2006
 	-- BUG FIX: when in debug mode, some debug messages do not handle the coins (money loot) correctly
@@ -554,7 +557,7 @@ function GZGL_GetCoinsHighestCount()
 	GZGL_Print("Inside GZGL_GetCoinsHighestCount", "", 1);
 	local lootCount = 0;
 	
-	for player, value in GZGL_SessionLoot do
+	for player, value in ipairs(GZGL_SessionLoot) do
 		if(GZGL_SessionLoot[player] ~= nil) then
 			GZGL_Print("Player "..player.." has "..GZGL_SessionLoot[player].coins.." coins", "", 1);
 			if(GZGL_SessionLoot[player].coins > lootCount) then
@@ -653,8 +656,8 @@ function GZGL_GetPossiblePlayer(loot)
 	local rollPlayers = {};
 	local name, tmp;
    
-	for i=1, GetNumRaidMembers(), 1 do
-		name = GetMasterLootCandidate(i);
+	for i=1, GetNumGroupMembers(), 1 do
+		name = GetMasterLootCandidate(loot.itemIndex, i);
 		-- if name == nil means that the player in that index (i) cannot get any loot from the master loor
 		-- (maybe the player is either in another zone, or was dead and released after the mob died etc
 		if(name ~= nil) then
@@ -682,7 +685,7 @@ function GZGL_GetPossiblePlayer(loot)
 
 	-- Now let's select those with the least ammount of coins/bijous
 	GZGL_Print("Getting least awarded players", "", 1);
-	local leastAwarded = nil;
+	local leastAwarded = rollPlayers;
 
 	if(loot.rari == 2) then -- coins
 		leastAwarded = GZGL_SelectCoinsLeastAwarded(rollPlayers);
@@ -703,13 +706,13 @@ end
 -- Delivers the loot to the winner and updates the current loot table
 function GZGL_DeliverLoot(playerName, lootInfo)
 	GZGL_Print("Delivering loot: ".. lootInfo.itemLink, "", 1);
-	local idxName = GetMasterLootCandidate(playerName.idx);
+	local idxName = GetMasterLootCandidate(lootInfo.itemIndex, playerName.idx);
 	local idx = playerName.idx;
 
 	if(idxName ~= playerName.name) then -- problem here, player changed or left
 		GZGL_Print("Either player changed place or left, searching his new position.", "", 1);
-		for i=1, GetNumRaidMembers(), 1 do
-			local name = GetMasterLootCandidate(i);
+		for i=1, GetNumGroupMembers(), 1 do
+			local name = GetMasterLootCandidate(lootInfo.itemIndex, i);
 			if(name == playerName.name) then -- found him, he just changed place
 				GZGL_Print("Player found in a new position.", "", 1);
 				idx = i;
@@ -766,7 +769,7 @@ function GZGL_PreCheck()
 	local lootMethod, lootMaster = GetLootMethod();
 	local realZone = GetRealZoneText();
    
-	if( (lootMethod == "master") and (tonumber(lootMaster) == 0) and (realZone == "Zul'Gurub") and (GetNumRaidMembers() >= 1) ) then
+	if( (lootMethod == "master") and (tonumber(lootMaster) == 0) and (realZone == "Zul'Gurub") and (GetNumGroupMembers() >= 1) ) then
 		return true;
 	else
 		GZGL_Print("Not in master loot and were not the master looter or not in Zul'Gurub", "", 1);
@@ -776,7 +779,7 @@ end
 
 -- returns the id in the raid of a player by name
 function GZGL_GetIdFromPlayerName(pName)
-	for i=1, GetNumRaidMembers(), 1 do
+	for i=1, GetNumGroupMembers(), 1 do
 		name, rank, subgroup, level, class, fileName, zone, online, isDead = GetRaidRosterInfo(i);
 		if(string.lower(name) == string.lower(pName)) then
 			return i;
@@ -786,7 +789,7 @@ end
 
 -- Returns the class of the designated player
 function GZGL_GetClass(raidIndex)
-	for i=1, GetNumRaidMembers(), 1 do
+	for i=1, GetNumGroupMembers(), 1 do
 		name, rank, subgroup, level, class, fileName, zone, online, isDead = GetRaidRosterInfo(i);
 		if(string.lower(name) == string.lower(raidIndex)) then
 			return class;
@@ -848,7 +851,7 @@ function GetArgs(message, separator)
 
 	-- Search for seperators in the string and return
 	-- the separated data.
-	for value in string.gfind(message, "[^"..separator.."]+") do
+	for value in string.gmatch(message, "[^"..separator.."]+") do
 		i = i + 1;
 		args[i] = value;
 	end -- end for
