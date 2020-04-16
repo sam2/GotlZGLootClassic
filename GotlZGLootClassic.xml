@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ns="http://www.blizzard.com/wow/ui/">
 	
-	<Script file="GotlZgLoot.lua"/>
+	<Script file="GotlZgLootClassic.lua"/>
 	<Script file="ClassLoot.lua"/>
 
 	<Frame name="GotlZgLoot_MainFrame">

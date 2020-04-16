@@ -3,5 +3,5 @@
 ## Title: GotlZGLoot
 ## Notes: Automatic Loot Master for ZG
 ## SavedVariables: GZGL_Config, GZGL_SessionLoot
-GotlZgLoot.xml
+GotlZgLootClassic.xml
 
